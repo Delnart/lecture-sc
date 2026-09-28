@@ -25,6 +25,8 @@ services:
     startCommand: python main.py
     plan: free
     envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.8
       - key: BOT_TOKEN
         sync: false
       - key: BD_ENGINE
