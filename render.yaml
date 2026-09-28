@@ -1,0 +1,39 @@
+# render.yaml — конфігурація для Render.com
+#
+# Як задеплоїти:
+# 1. Завантаж проект на GitHub
+# 2. У Render → New → Blueprint → підключи репозиторій
+# 3. Render сам зчитає цей файл і створить Worker
+# 4. У Render Dashboard → Environment Variables → додай:
+#      BOT_TOKEN, BD_ENGINE, SUPER_ADMINS, LOG_SHEET_NAME, SHEET_URL
+#    (якщо використовуєш Google Sheets — також завантаж credentials.json)
+#
+# ⚠️  FREE TIER ЛІМІТИ (станом на 2025):
+#   Render Background Worker: 750 год/місяць (~31 день — вистачає рівно на місяць)
+#   Render: автоматично зупиняється якщо вийшли години, рестартує наступного місяця
+#
+# ⚠️  NEON FREE TIER ЛІМІТИ:
+#   - 0.5 GB storage
+#   - 190 год compute/місяць (але compute рахується тільки під час активних запитів)
+#   - Авто-призупинення після 5 хв неактивності (тому в коді використовується NullPool)
+
+services:
+  - type: web             # Змінено на web, оскільки worker недоступний на Free plan
+    name: lecture-studrada-bot
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: python main.py
+    plan: free
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: BD_ENGINE
+        sync: false
+      - key: SUPER_ADMINS
+        sync: false
+      - key: LOG_SHEET_NAME
+        sync: false
+      - key: SHEET_URL
+        sync: false
+      - key: GOOGLE_CREDENTIALS_JSON
+        sync: false

@@ -1,0 +1,41 @@
+# ============================================================
+# docker-compose.yml — тільки для ЛОКАЛЬНОЇ розробки
+#
+# На Render деплоїш тільки бота (Web service / Background Worker).
+# БД — Neon (вказуй їх connection string у .env / Render env vars).
+#
+# Для локальної розробки замінюй BD_ENGINE в .env на:
+#   postgresql+asyncpg://admin:secret@localhost:5434/lecture_db
+# ============================================================
+
+services:
+  bot:
+    build: .
+    container_name: studrada_lecture_bot
+    restart: unless-stopped
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: postgres:15-alpine
+    container_name: studrada_lecture_db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: lecture_db
+    ports:
+      - "5434:5432"   # 5434 щоб не конфліктувати з іншими ботами
+    volumes:
+      - pgdata_studrada_lecture:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d lecture_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgdata_studrada_lecture:
