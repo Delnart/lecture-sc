@@ -47,7 +47,7 @@ async def show_profile(callback: types.CallbackQuery, state: FSMContext):
 
     text += (
         f"───────────────\n"
-        f"📅 <b>4 жовтня</b>, <b>час буде оголошено незабаром (о хх:00)</b>\n"
+        f"📅 <b>4 жовтня</b> о <b>14:00</b>\n"
         f"📍 <b>Офлайн:</b> <a href='https://maps.app.goo.gl/Xf2p69hudhib6iSz7?g_st=ic'>18 корпус КПІ</a>\n"
         f"💻 <b>Онлайн:</b> <a href='https://www.youtube.com/@studentcouncilfice'>онлайн-трансляція на YouTube</a>\n\n"
         f"📢 Новини та анонси: <a href='https://t.me/fice_time'>FICE Time 🇺🇦</a>"
